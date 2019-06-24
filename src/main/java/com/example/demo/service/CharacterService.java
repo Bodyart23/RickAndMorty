@@ -8,6 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -19,13 +23,14 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CharacterService {
     @Autowired //  Не работатет  Autowired
     private CharacterRepository characterRepository;//null
-
-    public List<Character> GetCharacter() throws JSONException {
+    @Autowired
+    public void GetCharacter() throws JSONException {
         BufferedReader reader = null;
         String json = null;
         try {
@@ -93,14 +98,9 @@ public class CharacterService {
             character.setEpisode(listdata);
             character.setUrl(obj.getString("url"));
             character.setCreated(obj.getString("created"));
-            list.add(character);
-            try {
-                characterRepository.save(character);// NullPointerExeption
-            }catch (NullPointerException e){
-                System.out.println(e.getLocalizedMessage());
-            }
+                characterRepository.save(character);
+
         }
-        return list;
     }
 
 }
