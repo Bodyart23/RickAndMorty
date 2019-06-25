@@ -10,4 +10,5 @@ public interface CharacterRepository extends JpaRepository<Character,Long> {
     List<Character> findCharactersByNameIsLike(String name);
     @Query(value = "select * from character limit 1 offset floor(random() * (select count(*) from character ))",nativeQuery = true)
     List<Character> getRandom();
+    Character findByName(String name);
 }

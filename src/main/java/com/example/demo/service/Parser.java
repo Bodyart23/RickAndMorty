@@ -67,7 +67,10 @@ public class Parser {
             character.setEpisode(listdata);
             character.setUrl(obj.getString("url"));
             character.setCreated(obj.getString("created"));
-            characterRepository.save(character);
+            Character check =characterRepository.findByName(obj.getString("name"));
+            if(check==null) {
+                characterRepository.save(character);
+            }else {continue;}
         }
     }
 
