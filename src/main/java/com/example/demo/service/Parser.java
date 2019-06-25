@@ -27,43 +27,11 @@ public class Parser {
     @Autowired
     private CharacterRepository characterRepository;
 
-//    @Scheduled(cron = "0 * * ? * *")//every minute
+//        @Scheduled(cron = "0 * * ? * *")//every minute
     @Scheduled(cron = "0 0 * ? * *") //every hour
     @Autowired
-//    @Scheduled(cron = "0 0 0 * * ?") //Every day at midnight - 12am
-    public void GetCharacter() throws JSONException {
-        System.out.println("Start schedule");
-        BufferedReader reader = null;
-        String json = null;
-        try {
-            URL url = new URL("https://rickandmortyapi.com/api/character/");
-            HttpsURLConnection c = (HttpsURLConnection) url.openConnection();
-            c.setRequestMethod("GET");
-            c.setReadTimeout(10000);
-            c.connect();
-            reader = new BufferedReader(new InputStreamReader(c.getInputStream()));
-            StringBuilder buf = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                buf.append(line + "\n");
-            }
-            json = buf.toString();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
+    public void jsonParser() throws JSONException {
+        String json = getCharacter();
         JSONObject userJson = new JSONObject(json);
         String characters = userJson.getString("results");
         JSONArray array = new JSONArray(characters);
@@ -103,4 +71,38 @@ public class Parser {
         }
     }
 
+    public String getCharacter() {
+        System.out.println("Start schedule");
+        BufferedReader reader = null;
+        String json = null;
+        try {
+            URL url = new URL("https://rickandmortyapi.com/api/character/");
+            HttpsURLConnection c = (HttpsURLConnection) url.openConnection();
+            c.setRequestMethod("GET");
+            c.setReadTimeout(10000);
+            c.connect();
+            reader = new BufferedReader(new InputStreamReader(c.getInputStream()));
+            StringBuilder buf = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                buf.append(line + "\n");
+            }
+            json = buf.toString();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return json;
+    }
 }
