@@ -3,7 +3,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-
+@NoArgsConstructor
 @Data
 @Entity
 @Getter

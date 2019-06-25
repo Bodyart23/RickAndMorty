@@ -2,7 +2,7 @@ package com.example.demo.model;
 import lombok.*;
 
 import javax.persistence.*;
-
+@NoArgsConstructor
 @Data
 @Getter
 @Setter
