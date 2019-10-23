@@ -5,6 +5,7 @@ import com.example.demo.model.Character;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -20,5 +21,10 @@ public class CharacterService {
     public List<Character> getByName(String name){
         List<Character> characters = characterRepository.findCharactersByNameIsLike(name);
         return characters;
+    }
+
+    public Optional<Character> getCharacter(Long id){
+        Optional<Character> character = characterRepository.findById(id);
+        return character;
     }
 }

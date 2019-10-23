@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Api(value = "The Rick and Morty API", description = "Methods for character selection")
@@ -29,5 +30,11 @@ public class Controller {
     public List<Character> serchByName(@PathVariable(name = "name") String name) {
         List<Character> characters = characterService.getByName(name);
         return characters;
+    }
+
+    @GetMapping("/character/{id}")
+    public Optional<Character> serchByID(@PathVariable(value = "id") Long id){
+        Optional<Character> character = characterService.getCharacter(id);
+        return character;
     }
 }

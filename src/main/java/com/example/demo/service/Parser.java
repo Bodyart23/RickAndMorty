@@ -31,7 +31,7 @@ public class Parser {
     @Scheduled(cron = "0 0 * ? * *") //every hour
     @Autowired
     public void jsonParser() throws JSONException {
-        String json = getCharacter();
+        String json = getJson();
         JSONObject userJson = new JSONObject(json);
         String characters = userJson.getString("results");
         JSONArray array = new JSONArray(characters);
@@ -74,7 +74,7 @@ public class Parser {
         }
     }
 
-    public String getCharacter() {
+    public String getJson() {
         System.out.println("Start schedule");
         BufferedReader reader = null;
         String json = null;
